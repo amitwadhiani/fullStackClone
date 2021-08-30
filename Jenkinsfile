@@ -6,7 +6,7 @@ node {
         commit_id = readFile('.git/commit-id').trim()
     }
     stage('test') {
-        sh 'cd src && deno test tests\deps.ts'
+        sh 'cd src && deno test tests/deps.ts'
     }
   
     stage('Deploy using docker-compose build & up') {  
