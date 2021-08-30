@@ -41,6 +41,7 @@
     "webpack-watch": "node_modules/.bin/webpack --hide-modules --watch --env.environment=development"
   },
   "dependencies": {
-    "@johmun/vue-tags-input": "^2.1.0"
+    "@johmun/vue-tags-input": "^2.1.0",
+    "deno": "^0.1.1"
   }
 }
