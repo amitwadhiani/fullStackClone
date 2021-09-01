@@ -11,7 +11,6 @@ node {
   
     stage('Deploy using docker-compose build & up') {  
         sh"""
-            cd fullstack/deno-drash-realworld-example-app
             docker-compose build && docker-compose up -d
         """
         }
