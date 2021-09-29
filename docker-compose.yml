@@ -1,47 +1,25 @@
-version: "3"
+version: '3'
 services:
-  apache:
-    container_name: realworld_apache
-    build:
-      context: .
-      dockerfile: .docker/apache.dockerfile
-    volumes:
-      - ./src:/var/www/src
-    working_dir: /var/www/src
-    depends_on:
-      - drash
-    ports:
-      - "8080:80"
-    networks:
-      - drash-app-network
 
-  postgres:
-    image: "postgres:11"
-    container_name: "realworld_postgres"
+  app:
+    image: ghcr.io/remast/gobuff_realworld_example_app/app:latest
+    container_name: gobuf___app
+    hostname: app
     ports:
-      - "54320:5432"
-    volumes:
-      - /root/demoApp/postgress:/var/lib/postgresql/data
-      - ./.docker/data:/docker-entrypoint-initdb.d
+      - "3000:3000"
+    depends_on: 
+      - db
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=userpassword
-    networks:
-      - drash-app-network
+      - "WAIT_HOSTS=db:5432"
+      - "DATABASE_HOST=db"
 
-  drash:
-    container_name: realworld_drash
-    build:
-      context: .
-      dockerfile: .docker/drash.dockerfile
-    volumes:
-      - ./src:/var/www/src
-    working_dir: /var/www/src
-    ports:
-      - "1667:1667"
-    networks:
-      - drash-app-network
-
-networks:
-  drash-app-network:
-    driver: bridge
+  db:
+    image: postgres:latest
+    container_name: gobuf___db
+    hostname: db
+    environment:
+      - "POSTGRES_DB=gobuff_realworld_example_app_development"
+      - "POSTGRES_PASSWORD=testPass"
+      - "POSTGRES_USER=postgres"
+    ports: 
+      - "5432:5432"
